@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL\freeglut.h>
 #include <math.h> 
 #include <time.h>
 #include <cstdlib>
@@ -7,12 +7,23 @@
 void Light()
 {
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
 	float col[] = { 0.55,1,0.75,1 };
+	float front_color[] = { 0,0,0,0.5 };
+	float back_color[] = { 1,1,1,0.5 };
+	float pos1[4] = { -3,3,3,1 };
+	float pos0[4] = { 3,3,3,1 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, col);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, col);
-	glMaterialfv(GL_BACK, GL_SPECULAR, col);
+	glLightfv(GL_LIGHT0, GL_POSITION, pos0);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, col);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, col);
+	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, front_color);
+	glMaterialfv(GL_BACK, GL_SPECULAR, back_color);
 }
 
 void display() {
@@ -36,10 +47,10 @@ void processSpecialKeys(int key, int x, int y) {
 	case GLUT_KEY_RIGHT:
 		glRotated(-5, 0, 0.1, 0); break;
 	case GLUT_KEY_UP:
-		glScalef(1.1,1.1,1.1); break;
+		glScalef(1.1, 1.1, 1.1); break;
 	case GLUT_KEY_DOWN:
 		glScalef(0.9, 0.9, 0.9); break;
-}
+	}
 }
 
 int main(int argc, char * argv[])
